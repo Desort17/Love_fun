@@ -1,8 +1,134 @@
-<div class="container">
-  <img class="sticker" id="sticker" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="cute sticker" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Go Out With Me?</title>
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0f0f0f;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+    }
+    .sticker {
+      width: 120px;
+      margin-bottom: 15px;
+      animation: bounce 1.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+    button {
+      font-size: 16px;
+      padding: 10px 22px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .yes-button {
+      background: #ff4d6d;
+      color: white;
+    }
+    .no-button {
+      background: #444;
+      color: white;
+    }
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: floatUp 2s linear forwards;
+    }
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
 
-  <h2>Will you go out with me? 💕</h2>
+  <div class="container">
+    <img class="sticker" id="sticker" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="cute sticker" />
+    <h2>Will you go out with me?</h2>
+    <button class="yes-button" onclick="handleYesClick()">Yes</button>
+    <button class="no-button" onclick="handleNoClick()">No</button>
+  </div>
 
-  <button class="yes-button" onclick="handleYesClick()">Yes</button>
-  <button class="no-button" onclick="handleNoClick()">No</button>
-</div>
+  <script>
+    const messages = [
+      "No ",
+      "Are you sure?",
+      "Think again…",
+      "Last chance ",
+      "Okay fine "
+    ];
+    const stickerImages = [
+      "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+      "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+      "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
+    ];
+
+    let messageIndex = 0;
+    let stickerIndex = 0;
+
+    function handleNoClick() {
+      const noButton = document.querySelector(".no-button");
+      const yesButton = document.querySelector(".yes-button");
+      const sticker = document.getElementById("sticker");
+
+      noButton.textContent = messages[messageIndex];
+      messageIndex = (messageIndex + 1) % messages.length;
+
+      stickerIndex = (stickerIndex + 1) % stickerImages.length;
+      sticker.src = stickerImages[stickerIndex];
+
+      const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+      yesButton.style.fontSize = `${currentSize * 1.4}px`;
+    }
+
+    function handleYesClick() {
+      for (let i = 0; i < 10; i++) {
+        createHeart();
+      }
+      setTimeout(() => {
+        alert("Yayyy  I knew it!");
+      }, 300);
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤️";
+
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.bottom = "0px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>
